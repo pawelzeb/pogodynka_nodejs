@@ -5,10 +5,10 @@ class Database {
 	console.log("Inicjuje połaczenie...")
     this.pool = mysql.createPool({
      	// host: 'mariadb',
-     	host: 'localhost',
-        user: 'pogodynka_user',
-        password: 'pogodynka_passw321!',
-        database: 'pogodynka',
+     	host: 'mysql.railway.internal',
+        user: 'root',
+        password: 'vExdpVpBMNQPLLxWeWfURBciBexbFabc',
+        database: 'railway',
       	waitForConnections: true,
       	connectionLimit: 10,
       	queueLimit: 0
