@@ -5,7 +5,7 @@ const Database = require('../db/Database')
 const version = '0.9.0'
 const name = 'Pogodynka API'
 
-const key = '1f7cff01e11e11b2533f9497da9ee055'
+const key = '063e5806e7ff195123831913298ce2d8'
 
 const getWeather = async (req, res) => {
     const city = req.params.city;
