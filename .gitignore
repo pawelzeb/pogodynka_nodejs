@@ -1,3 +1,4 @@
-git rm --cached .env serviceAccountkey.json rcb.txt
-git commit -m "Usunięcie plików z sekretami i dodanie ich do .gitignore"
-git push origin main
+.env
+serviceAccountkey.json
+rcb.txt
+node_modules/
