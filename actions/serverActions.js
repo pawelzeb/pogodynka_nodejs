@@ -7,7 +7,7 @@ var serviceAccount = require("../serviceAccountkey.json");
 const fakeFBAlerts = process.argv[2] === 'FB_ALERT';
 const Database = require('../db/Database')
 
-const key = '063e5806e7ff195123831913298ce2d8'
+const key = '1063e5806e7ff195123831913298ce2d8'
 
 
 const serverSettings1 = (PORT) => {
