@@ -5,6 +5,7 @@ const Database = require('../db/Database')
 const version = '0.9.0'
 const name = 'Pogodynka API'
 
+// const key = '1f7cff01e11e11b2533f9497da9ee055'
 const key = '063e5806e7ff195123831913298ce2d8'
 
 const getWeather = async (req, res) => {
@@ -50,7 +51,7 @@ const setFollowCity = async (req, res) => {
         try {
         const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${cc}&appid=${key}`)
         const db = new Database();
-        db.insertFollow(response.data, 1)
+        db.insertFollow(response.data, cc, 1)
         res.send({code:200})
     }
     catch {
@@ -66,7 +67,7 @@ const removeFollowCity = async (req, res) => {
         try {
         const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${cc}&appid=${key}`)
         const db = new Database();
-        db.insertFollow(response.data, -1)
+        db.insertFollow(response.data, cc, -1)
         res.send({code:200})
     }
     catch {
