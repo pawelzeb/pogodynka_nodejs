@@ -80,7 +80,7 @@ app.get('/', getMain);
 app.get('/weather/:city/:cc', getWeather);
 /**
  * @swagger
- * /forecast:/:city/:cc:
+ * /forecast/{city}/{cc}:
  *   get:
  *     tags:
  *       - Weather API
@@ -107,7 +107,7 @@ app.get('/weather/:city/:cc', getWeather);
 app.get('/forecast/:city/:cc', getForecast);
 /**
  * @swagger
- * /history:/:city/:cc:
+ * /history/{city}/{cc}:
  *   get:
  *     tags:
  *       - Zapytania do MariaDB
@@ -134,7 +134,7 @@ app.get('/forecast/:city/:cc', getForecast);
 app.get('/history/:city/:cc', getHistory);
 /**
  * @swagger
- * /follow:/:city/:cc:
+ * /follow/{city}/{cc}:
  *   put:
  *     tags:
  *       - Follow
@@ -161,7 +161,7 @@ app.get('/history/:city/:cc', getHistory);
 app.put('/follow/:city/:cc', setFollowCity);
 /**
  * @swagger
- * /follow:/:city/:cc:
+ * /follow/{city}/{cc}:
  *   delete:
  *     tags:
  *       - Follow
