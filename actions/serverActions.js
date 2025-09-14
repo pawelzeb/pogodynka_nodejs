@@ -12,12 +12,13 @@ const key = '063e5806e7ff195123831913298ce2d8'
 
 const serverSettings1 = (PORT) => {
     console.log(`Serwer Express działa na http://localhost:${PORT}`);
-
-    if(fakeFBAlerts) {
       admin.initializeApp({
           credential: admin.credential.cert(serviceAccount),
           databaseURL: "https://pogodynka-e398e-default-rtdb.europe-west1.firebasedatabase.app"
       });
+
+    if(fakeFBAlerts) {
+
       const db = admin.database();
       const ref = db.ref('msg1');
         let linie = readAlerts("rcb.txt")
@@ -32,61 +33,78 @@ const serverSettings1 = (PORT) => {
 
 async function checkForecast(city, cc) {
     try {
+        console.log(`Sprawdza anomalia pogodowe w ${city}`, cc)
         const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city},${cc}&appid=${key}`)
-        console.log(response.data.name);
+        // console.log(response.data);
         response.data.list = response.data.list.slice(0,8)
+
+        const check = [false, false, false]
         for(f of response.data.list) {
-            if(f.rain !== undefined && f.rain["3h"] !== undefined  && f.rain["3h"] > 15) {
-                //firebase komunikat Uwaga w najbliższych 24h przewidywane są intensywne opady
-                console.log(`Uwaga w najbliższych 24h przewidywane są intensywne opady w ${city}`)
-                fireRCBAlert(admin.database().ref(city), "Uwaga w najbliższych 24h przewidywane są intensywne opady")
+            
+            if(check[0] === false && f.rain !== undefined && f.rain["3h"] !== undefined  && f.rain["3h"] > 15) {
+                check[0] = true;
+                const dt = f.dt_txt.split(" ")[0]
+                //firebase komunikat Uwaga ${dt} przewidywane są intensywne opady
+                console.log(`Uwaga ${dt} przewidywane są intensywne opady w ${city}`)
+                fireRCBAlert(admin.database().ref(city), `Uwaga ${dt} przewidywane są intensywne opady`)
             }
-            if(f.main.tem - 273.15 > 30 ) { //temperatury ponad 30 stopni Celsjusza
-                //firebase komunikat Uwaga w najbliższych 24h przewidywane są bardzo wysokie temperatury
-                console.log(`Uwaga w najbliższych 24h przewidywane są bardzo wysokie temperatury w ${city}`)
-                fireRCBAlert(admin.database().ref(city), "Uwaga w najbliższych 24h przewidywane są bardzo wysokie temperatury")
+            if(check[1] === false && f.main.temp - 273.15 > 30 ) { //temperatury ponad 30 stopni Celsjusza
+                check[1] = true;
+                const dt = f.dt_txt.split(" ")[0]
+                //firebase komunikat Uwaga ${dt} przewidywane są bardzo wysokie temperatury
+                console.log(`Uwaga ${dt} przewidywane są bardzo wysokie temperatury w ${city}`)
+                fireRCBAlert(admin.database().ref(city), `Uwaga ${dt} przewidywane są bardzo wysokie temperatury`)
             }
-            if(f.wind.speed > 22 ) {    //Wiatr ponad 80km/h
-                //firebase komunikat Uwaga w najbliższych 24h przewidywane są bardzo silne wiatry
-                console.log(`Uwaga w najbliższych 24h przewidywane są bardzo silne wiatry w ${city}`)
-                fireRCBAlert(admin.database().ref(city), "Uwaga w najbliższych 24h przewidywane są bardzo silne wiatry")
+            if(check[2] === false && f.wind.speed > 22 ) {    //Wiatr ponad 80km/h
+                //firebase komunikat Uwaga ${dt} przewidywane są bardzo silne wiatry
+                const dt = f.dt_txt.split(" ")[0]
+                check[2] = true;
+                console.log(`Uwaga ${dt} przewidywane są bardzo silne wiatry w ${city}`)
+                fireRCBAlert(admin.database().ref(city), `Uwaga ${dt} przewidywane są bardzo silne wiatry`)
             }
         }
     }
-    catch {
+    catch(error) {
+        console.error("Błąd", error)
     }
 }
 
 function follow() {
-        //czytanie follow co 0.5h
-    // cron.schedule('*/10 * * * * *', () => {
-    cron.schedule('0 0 * * * *', () => {    //'0 */30 * * * *' co 30 minut
+    // cron.schedule('*/50 * * * * *', () => {  //czytanie follow co 30 sek
+    cron.schedule('0 0 * * * *', () => {    //czytanie co pełną godzinę //'0 */15 * * * *' co 15 minut
         (async () => {
         const db = new Database();
+        if(db === null) {
+            console.error("Brak bazy danych.")
+            return;
+        }
         const rows = await db.getFollow()
-        if(rows == null)
-            console.log(`NULL`)
-        else 
-            console.log(`${rows.length}`)
-        console.log(`${rows[0][1]}`)
-        for(r of rows) {
-            const city = r.name;
-            const cc = r.cc; //kod kraju
-            console.log(`Pobiera info o ${city} z ${cc}`)
-            try {
-                const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${cc}&appid=${key}`)
-                db.insertWeatherData(response.data)
-                checkForecast(city,cc)
+        if(rows == null) {
+            console.log(`Zawartość tabelki cities: NULL`)
+        }
+        else {
+            console.log(`liczba miast follow: ${rows.length}`)
+            // console.log(`${rows[0][1]}`)
+            for(r of rows) {
+                const city = r.name;
+                const cc = r.cc; //kod kraju
+                console.log(`Pobiera info o ${city} z ${cc}`)
+                try {
+                    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${cc}&appid=${key}`)
+                    db.insertWeatherData(response.data, cc)
+                    checkForecast(city,cc)
+                }
+                catch(error) {
+                    console.error("Błąd", error)
+                }
             }
-            catch {}
-
         }
     })();
 });
 }
 
 function fireRCBAlert(ref, msg) {
-    console.log(msg);
+    // console.log("*",msg);
     ref.set(msg)
     .then(() => {
         console.log(`Zapisano: ${msg}`);
