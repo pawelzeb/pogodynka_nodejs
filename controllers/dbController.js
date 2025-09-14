@@ -1,7 +1,7 @@
 
 const axios = require('axios')
 const Database = require('../db/Database')
-const key = '063e5806e7ff195123831913298ce2d8'
+const key = '1f7cff01e11e11b2533f9497da9ee055'
 
 const getHistory = async (req, res) => {
     let city = req.params.city;
