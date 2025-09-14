@@ -4,7 +4,7 @@ class Database {
   constructor() {
 	console.log("Inicjuje połaczenie...")
     this.pool = mysql.createPool({
-		host: 'mariadb',
+      	host: 'mariadb',
         user: 'pogodynka_user',
         password: 'pogodynka_passw321!',
         database: 'pogodynka',
@@ -13,7 +13,7 @@ class Database {
       	queueLimit: 0
     });
   }
-  insertWeatherData(json) {
+  insertWeatherData(json, cc) {
 	  (async () => {
 		  try {
 			  const city = json.name
@@ -23,13 +23,14 @@ class Database {
 				);
 				
 				if(rows.length <= 0) {
+					console.log(rows[0])
 					//dodaj miasto
 					await this.pool.execute(
-						'INSERT INTO city (lon, lat, name, timezone_offset) VALUES (?, ?, ?, ?)',
-						[json.coord.lon, json.coord.lat, city, json.timezone]
+						'INSERT INTO city (lon, lat, name, timezone_offset, follow, cc) VALUES (?, ?, ?, ?, ?, ?)',
+		  				[json.coord.lon, json.coord.lat, city, json.timezone, 0, cc]					
 					);
 					console.log(`Dodano nowe miasto ${city}`);
-					const rows = await this.pool.execute(
+					[rows] = await this.pool.execute(
 						'SELECT id FROM city WHERE name LIKE ?',
 						[city]
 					);
@@ -47,7 +48,7 @@ class Database {
 		})();
 	}
 	//;
-    insertFollow(json, iFollow) {
+    insertFollow(json,cc, iFollow) {
 		(async () => {
 			try {
 				const city = json.name
@@ -57,12 +58,12 @@ class Database {
 			);
 			
 		if(rows.length <= 0) {
-			//dodaj miasto
+			//dodaj miasto 
 			await this.pool.execute(
-			  'INSERT INTO city (lon, lat, name, timezone_offset, follow) VALUES (?, ?, ?, ?, ?)',
-			  [json.coord.lon, json.coord.lat, city, json.timezone, iFollow>0]
+			  'INSERT INTO city (lon, lat, name, timezone_offset, follow, cc) VALUES (?, ?, ?, ?, ?, ?)',
+			  [json.coord.lon, json.coord.lat, city, json.timezone, iFollow>0, cc]
 			);
-			console.log(`Dodano nowe miasto ${city}`);
+			console.log(`Dodano nowe miasto ${city} ${cc}`);
 		}
 		else {
 			const city_id = rows[0].id
@@ -74,7 +75,7 @@ class Database {
 			
 		}
 
-		if(bFollow)
+		if(iFollow > 0)
 			console.log(`Is following ${city} now`);
 		else
 			console.log(`Is unfollowing ${city} now`);
@@ -92,7 +93,7 @@ class Database {
 			return rows
 		} catch (err) {
 			console.error('Błąd przy czytaniu follow:', err.message);
-			return rows;
+			return null;
 		}
 	}
 
