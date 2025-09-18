@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pogodynka</string>
+    <string name="enter_location">Wprowadź lokację</string>
+    <string name="title_activity_history_detail_host">HistoryDetailHostActivity</string>
+    <string name="title_history_list">Histories</string>
+    <string name="title_history_detail">History Detail</string>
+</resources>

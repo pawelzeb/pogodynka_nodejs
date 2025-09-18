@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Pogodynka.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="follow_cities" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="mru_city" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Warszawa</Value>
+    </Setting>
+    <Setting Name="mru_cc" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pl</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -71,7 +71,8 @@ async function checkForecast(city, cc) {
 
 function follow() {
     // cron.schedule('*/50 * * * * *', () => {  //czytanie follow co 30 sek
-    cron.schedule('0 0 * * * *', () => {    //czytanie co pełną godzinę //'0 */15 * * * *' co 15 minut
+    cron.schedule('*/2 * * * *', () => {    //czytanie co pełną godzinę //'0 */15 * * * *' co 15 minut
+        console.log("TICK...");
         (async () => {
         const db = new Database();
         if(db === null) {

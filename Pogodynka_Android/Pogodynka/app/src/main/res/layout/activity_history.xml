@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.HistoryActivityOld">
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+    <TableLayout
+        android:layout_width="3000dp"
+        android:layout_height="200dp"
+        android:background="@color/black"
+        >
+        <TableRow>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+            <TextView
+                android:background="@drawable/forecast"
+                android:width="200dp"
+                android:text="jakiś tekst"/>
+
+        </TableRow>
+
+    </TableLayout>
+</HorizontalScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        app:labelVisibilityMode="labeled"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        style="?attr/bottomNavigationStyle"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_navigation" />
+</RelativeLayout>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35431.28
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pogodynka", "Pogodynka\Pogodynka.csproj", "{D02A9788-AD1F-4616-A50B-D4A278890753}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PogodynkaTests", "PogodynkaTests\PogodynkaTests.csproj", "{F21E90A1-64C4-46C3-A4A7-56D2B8C5DE0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D02A9788-AD1F-4616-A50B-D4A278890753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D02A9788-AD1F-4616-A50B-D4A278890753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D02A9788-AD1F-4616-A50B-D4A278890753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D02A9788-AD1F-4616-A50B-D4A278890753}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F21E90A1-64C4-46C3-A4A7-56D2B8C5DE0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F21E90A1-64C4-46C3-A4A7-56D2B8C5DE0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F21E90A1-64C4-46C3-A4A7-56D2B8C5DE0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F21E90A1-64C4-46C3-A4A7-56D2B8C5DE0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {746C58CE-304F-4BD2-BEA1-ABA6C74D18CB}
+	EndGlobalSection
+EndGlobal
